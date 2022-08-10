@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment';
 import { VideoModule } from './video/video.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +34,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     AngularFirestoreModule,
     VideoModule,
     AppRoutingModule,
+    AngularFireStorageModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
