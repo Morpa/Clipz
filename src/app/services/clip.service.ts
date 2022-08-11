@@ -6,7 +6,7 @@ import {
   QuerySnapshot,
 } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { switchMap,map } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import IClip from '../models/clip.model';
 
@@ -35,7 +35,13 @@ export class ClipService {
 
         return query.get();
       }),
-      map(snapshot=>(snapshot as QuerySnapshot<IClip>).docs)
+      map((snapshot) => (snapshot as QuerySnapshot<IClip>).docs)
     );
+  }
+
+  updateClip(id: string, title: string) {
+    return this.clipsCollection.doc(id).update({
+      title,
+    });
   }
 }
