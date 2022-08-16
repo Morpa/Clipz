@@ -5,7 +5,8 @@ import {
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
-import { last, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
+import { combineLatest, forkJoin } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Router } from '@angular/router';
@@ -31,6 +32,7 @@ export class UploadComponent implements OnDestroy {
   task?: AngularFireUploadTask;
   screenshots: string[] = [];
   selectedScreenshot = '';
+  screenshotTask?: AngularFireUploadTask;
 
   title = new FormControl('', {
     validators: [Validators.required, Validators.min(3)],
@@ -80,7 +82,7 @@ export class UploadComponent implements OnDestroy {
     this.nextStep = true;
   }
 
-  uploadFile() {
+  async uploadFile() {
     this.uploadForm.disable();
 
     this.showAlert = true;
@@ -92,28 +94,58 @@ export class UploadComponent implements OnDestroy {
     const clipFileName = uuid();
     const clipPath = `clips/${clipFileName}.mp4`;
 
+    const screeshotBlob = await this.ffmpegService.blobFromURL(
+      this.selectedScreenshot
+    );
+
+    const screenshotPath = `screenshots/${clipFileName}.png`;
+
     this.task = this.storage.upload(clipPath, this.file);
 
     const clipRef = this.storage.ref(clipPath);
 
-    this.task.percentageChanges().subscribe((progress) => {
-      this.percentage = (progress as number) / 100;
+    this.screenshotTask = this.storage.upload(screenshotPath, screeshotBlob);
+
+    const screenshotRef = this.storage.ref(screenshotPath);
+
+    combineLatest([
+      this.task.percentageChanges(),
+      this.screenshotTask.percentageChanges(),
+    ]).subscribe((progress) => {
+      const [clipProgress, screenshotProgress] = progress;
+
+      if (!clipProgress || !screenshotProgress) {
+        return;
+      }
+
+      const total = clipProgress + screenshotProgress;
+
+      this.percentage = (total as number) / 200;
     });
 
-    this.task
-      .snapshotChanges()
+    forkJoin([
+      this.task.snapshotChanges(),
+      this.screenshotTask.snapshotChanges(),
+    ])
       .pipe(
-        last(),
-        switchMap(() => clipRef.getDownloadURL())
+        switchMap(() =>
+          forkJoin([clipRef.getDownloadURL(), screenshotRef.getDownloadURL()])
+        )
       )
       .subscribe({
-        next: async (url) => {
+        next: async (urls) => {
+
+const [clipURL, screenshotURL] = urls
+
+
           const clip = {
             uid: this.user?.uid as string,
             displayName: this.user?.displayName as string,
             title: this.title.value,
             fileName: `${clipFileName}.mp4`,
-            url,
+            url: clipURL,
+            screenshotURL,
+            screenshotFileName: `${clipFileName}.png`,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
           };
 
