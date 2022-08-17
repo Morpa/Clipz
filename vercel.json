@@ -1,0 +1,11 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cross-Origin-Opener-Police", "value": "same-origin" },
+        { "key": "Cross-Origin-Embedder-Police", "value": "require-corp" }
+      ]
+    }
+  ]
+}
