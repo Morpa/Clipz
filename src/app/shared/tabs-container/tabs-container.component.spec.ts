@@ -39,7 +39,9 @@ describe('TabsContainer Component', () => {
     );
     const tabsProps = containerComponent.componentInstance.tabs;
 
-    expect(tabs.length).toBe(2);
-    expect(tabsProps.length).toBe(2);
+    expect(tabs.length).withContext('Tabs did not render').toBe(2);
+    expect(tabsProps.length)
+      .withContext('Could not grab component property')
+      .toBe(2);
   });
 });
