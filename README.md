@@ -3,9 +3,9 @@
 <p align="center">
   <img alt="Made by" src="https://img.shields.io/badge/made%20by-Morpa%20-%2356BEB8">
 
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/morpa/Clipz.svg?color=56BEB8">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Morpa/Clipz.svg?color=56BEB8">
 
-  <img alt="Code size" src="https://img.shields.io/github/languages/code-size/morpa/Clipz.svg?color=56BEB8">
+  <img alt="Code size" src="https://img.shields.io/github/languages/code-size/Morpa/Clipz.svg?color=56BEB8">
 
   <img alt="Github top language" src="https://img.shields.io/github/languages/top/Morpa/Clipz?color=56BEB8">
 
