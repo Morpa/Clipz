@@ -1,6 +1,28 @@
 # Clipz
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
+<p align="center">
+  <img alt="Made by" src="https://img.shields.io/badge/made%20by-Morpa%20-%2356BEB8">
+
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/morpa/Clipz.svg?color=56BEB8">
+
+  <img alt="Code size" src="https://img.shields.io/github/languages/code-size/morpa/Clipz.svg?color=56BEB8">
+
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/Morpa/Clipz?color=56BEB8">
+
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/Morpa/Clipz?color=56BEB8">
+
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/Morpa/Clipz?color=56BEB8">
+
+</p>
+
+## What is inside?
+
+This project uses lot of stuff as:
+
+- [Angular](https://angular.io/)
+- [Webassembly](https://webassembly.org/)
+- [Firebase](https://firebase.google.com/)
+- [Tailwindcss](https://tailwindcss.com/)
 
 ## Development server
 
